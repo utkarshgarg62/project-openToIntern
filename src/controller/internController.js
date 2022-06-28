@@ -1,31 +1,43 @@
-const internModel= requre("../models/interModel")
-const {isValid, isValidName}=require("../middleware/validation")
+const internModel= require("../models/internModel")
+const {isValid, isValidName,isValidEmail,isValidMobile,isValidObjectId}=require("../middleware/validation")
 
 const createInterns=async function(req,res){
     try{
         let{name,email,mobile,collegeId}=req.body
 
+        if(Object.keys(req.body).length<1) {
+            return res.status(400).send({msg:"Insert data :Bad request"})
+        }
+
+
         if (!isValid(name)) {
             return res.status(400).send({ msg: "Enter College Name" })
         }
         if (!isValidName(name)) {
-            return res.status(400).send({ msg: "Enter a valid College Name" })
+            return res.status(400).send({ msg: "Enter a valid Name" })
         }
-        if (!isValid(fullName)) {
+        if (!isValid(email)) {
+            return res.status(400).send({ msg: "Enter a Email" })
+        }
+        if (!isValidEmail(email)) {
+            return res.status(400).send({ msg: "Enter a valid email" })
+        }
+        if (!isValid(mobile)) {
             return res.status(400).send({ msg: "Enter College Full Name" })
         }
-        if (!isValidName(fullName)) {
-            return res.status(400).send({ msg: "fullname only take alphabets" })
+        if (!isValidMobile(mobile)) {
+            return res.status(400).send({ msg: "Enter College Full Name" })
         }
-        if (!isValid(logoLink)) {
+        if (!isValid(collegeId)) {
             return res.status(400).send({ msg: "Enter College Logo-Link" })
         }
-        if (!isValidLink(logoLink)) {
+        if (!isValidObjectId(collegeId)) {
             return res.status(400).send({ msg: "Enter a valid url" })
         }
 
-        let collegeData=await collegeModel.create(req.body)
-        res.status(201).send(collegeData)
+
+        let internData=await internModel.create(req.body)
+        res.status(201).send({ status: true, data: internData })
     }
     catch (err) {
         res.status(500).send({ status: false, msg: err.message })

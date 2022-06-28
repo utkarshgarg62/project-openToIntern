@@ -1,3 +1,3 @@
 const express = require('express');
 const router = express.Router();
-//const AuthorController=require("../controller/authorController")
+const collegController=require("../controller/collegeController")

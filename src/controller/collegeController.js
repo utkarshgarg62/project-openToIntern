@@ -18,7 +18,7 @@ const createCollege=async function(req,res){
         let Name = req.body.name.toLowerCase().trim()
         let checkClg = await collegeModel.findOne({ name: Name });
         if (checkClg) return res.status(400).send({ status: false, msg: "College Name Already Exists" });
-
+        req.body.name=Name
 
         if (!isValid(fullName)) {
             return res.status(400).send({ msg: "Enter College Full Name" })
@@ -26,6 +26,7 @@ const createCollege=async function(req,res){
         if (!isValidCollegeName(fullName)) {
             return res.status(400).send({ msg: "Enter a valid College Full Name" })
         }
+
         if (!isValid(logoLink)) {
             return res.status(400).send({ msg: "Enter College Logo-Link" })
         }

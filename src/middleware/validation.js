@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 
 //clg Name Validation
 const isValidClgName =function(name){
-    const  nameRegex =/^[a-z]{2,30}$/
+    const  nameRegex =/^[a-zA-Z]{2,30}$/
     return nameRegex.test(name)
 }
 
@@ -15,7 +15,7 @@ const isValidName =function(name){
 
 //College Full Name Validation
 const isValidCollegeName =function(name){
-    const  nameRegex =/^[a-zA-Z ]{2,30}$/
+    const  nameRegex =/^[a-zA-Z ]{2,50}$/
     return nameRegex.test(name)
 }
 

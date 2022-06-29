@@ -56,9 +56,9 @@ const getCollegeDetails = async function (req, res) {
         if (!getClg) return res.status(404).send({ status: false, msg: "No such college Name found", });
         
         let clgId=getClg._id 
-        console.log(clgId)
+       // console.log(clgId)
 
-        let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,email:1,mobile:1,collegeId:1})
+        let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,email:1,mobile:1,collegeId:0}).populate('collegeId')
         if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
 
         let Name=getClg.name

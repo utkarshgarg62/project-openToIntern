@@ -14,12 +14,15 @@ const createCollege=async function(req,res){
         if (!isValidCollegeName(name)) {
             return res.status(400).send({ msg: "Enter a valid College Name" })
         }
+
+        let Name = req.body.name.toLowerCase().trim()
+        let checkClg = await collegeModel.findOne({ name: Name });
+        if (checkClg) return res.status(400).send({ status: false, msg: "College Name Already Exists" });
+
+
         if (!isValid(fullName)) {
             return res.status(400).send({ msg: "Enter College Full Name" })
         }
-        // if (!isValidName(fullName)) {
-        //     return res.status(400).send({ msg: "Enter a valid full Name contains only alphabets" })
-        // }
         if (!isValid(logoLink)) {
             return res.status(400).send({ msg: "Enter College Logo-Link" })
         }
@@ -45,21 +48,27 @@ const getCollegeDetails = async function (req, res) {
         if (!Object.keys(data).length) return res.status(400).send({ status: false, msg: "Please Enter The College Name", });
         let clgName=data.collegeName.toLowerCase()
 
-        let  getClg = await collegeModel.find({name:clgName})
+        let  getClg = await collegeModel.findOne({name:clgName})
         if (!getClg) return res.status(404).send({ status: false, msg: "No such college Name found", });
         
         let clgId=getClg._id 
         console.log(clgId)
 
         let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,name:1,email:1,mobile:1,collegeId:0}).populate("collegeId")
-        //if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
-        
-            if (getClg.length > 0) {
-                res.status(200).send({ status: true, data: getClg,getData})
-            }
-            else {
-                res.status(404).send({ status: false, msg: "No data found" })
-            }
+        if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
+
+        let Name=getClg.name
+        let FullName=getClg.fullName
+        let LogoLink=getClg.logoLink
+
+        let collegeDetails={
+        name:Name,
+        fullName:FullName,
+        logoLink:LogoLink,
+        interns:getData
+    }
+    res.status(200).send({ status: true, data: collegeDetails})
+          
     }
     catch (err) {
         res.status(500).send({ msg:err.message})

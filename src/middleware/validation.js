@@ -2,6 +2,10 @@ const mongoose = require("mongoose")
 
 //Name Validation
 const isValidName =function(name){
+    const  nameRegex =/^[a-zA-Z]{2,30}$/
+    return nameRegex.test(name)
+}
+const isValidCollegeName =function(name){
     const  nameRegex =/^[a-zA-Z ]{2,30}$/
     return nameRegex.test(name)
 }
@@ -41,15 +45,11 @@ const isBoolean = function(value){
 //Value Validation
 const isValid = function(value){
     if(typeof value ==='undefined' || value ===null)  return false
-    if(typeof value ==='string' && value.trim().length ===0)return false
+    if(typeof value !=='string' || value.trim().length ===0)return false
     return true
 }
 
-//Name Validation
-const isValidCollegeName = function(title){
-    const bTitleregex = /^[A-Za-z0-9 ]+$/
-    return bTitleregex.test(title)
-}
+
 
 
 module.exports ={isValidName,isValidEmail,isValidObjectId,isValidMobile,isBoolean,isValid,isValidLink,isValidCollegeName}

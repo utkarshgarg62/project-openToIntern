@@ -40,7 +40,7 @@ const createInterns=async function(req,res){
             return res.status(400).send({ msg: "Enter a valid url" })
         }
 
-
+        
         let internData=await internModel.create(req.body)
         res.status(201).send({ status: true, data: internData })
     }

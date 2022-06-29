@@ -11,8 +11,8 @@ const createCollege=async function(req,res){
         if (!isValid(name)) {
             return res.status(400).send({ msg: "Enter College Name" })
         }
-        if (!isValidCollegeName(name)) {
-            return res.status(400).send({ msg: "Enter a valid College Name" })
+        if (!isValidName(name)) {
+            return res.status(400).send({ msg: "Enter a valid College abrivation" })
         }
 
         let Name = req.body.name.toLowerCase().trim()
@@ -22,6 +22,9 @@ const createCollege=async function(req,res){
 
         if (!isValid(fullName)) {
             return res.status(400).send({ msg: "Enter College Full Name" })
+        }
+        if (!isValidCollegeName(fullName)) {
+            return res.status(400).send({ msg: "Enter a valid College Name" })
         }
         if (!isValid(logoLink)) {
             return res.status(400).send({ msg: "Enter College Logo-Link" })
@@ -54,7 +57,7 @@ const getCollegeDetails = async function (req, res) {
         let clgId=getClg._id 
         console.log(clgId)
 
-        let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,name:1,email:1,mobile:1,collegeId:0}).populate("collegeId")
+        let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,email:1,mobile:1,collegeId:1})
         if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
 
         let Name=getClg.name

@@ -1,5 +1,5 @@
 const collegeModel= require("../models/collegeModel")
-const {isValid, isValidName, isValidCollegeName,isValidLink}=require("../middleware/validation")
+const {isValid, isValidName, isValidCollegeName,isValidLink,isValidClgName}=require("../middleware/validation")
 const internModel = require("../models/internModel")
 
 const createCollege=async function(req,res){
@@ -11,8 +11,8 @@ const createCollege=async function(req,res){
         if (!isValid(name)) {
             return res.status(400).send({ msg: "Enter College Name" })
         }
-        if (!isValidName(name)) {
-            return res.status(400).send({ msg: "Enter a valid College abrivation" })
+        if (!isValidClgName(name)) {
+            return res.status(400).send({ msg: "Enter a valid College Name" })
         }
 
         let Name = req.body.name.toLowerCase().trim()
@@ -24,7 +24,7 @@ const createCollege=async function(req,res){
             return res.status(400).send({ msg: "Enter College Full Name" })
         }
         if (!isValidCollegeName(fullName)) {
-            return res.status(400).send({ msg: "Enter a valid College Name" })
+            return res.status(400).send({ msg: "Enter a valid College Full Name" })
         }
         if (!isValid(logoLink)) {
             return res.status(400).send({ msg: "Enter College Logo-Link" })
@@ -70,7 +70,7 @@ const getCollegeDetails = async function (req, res) {
         logoLink:LogoLink,
         interns:getData
     }
-    res.status(200).send({ status: true, data: collegeDetails})
+    res.status(200).send({ status: true, data: collegeDetails,})
           
     }
     catch (err) {

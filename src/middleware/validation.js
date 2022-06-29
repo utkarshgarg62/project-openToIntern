@@ -15,7 +15,7 @@ const isValidName =function(name){
 
 //College Full Name Validation
 const isValidCollegeName =function(name){
-    const  nameRegex =/^[a-zA-Z ]{2,50}$/
+    const  nameRegex =/\w+([, ]+\w+){1,2}/
     return nameRegex.test(name)
 }
 

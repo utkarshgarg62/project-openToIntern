@@ -50,7 +50,7 @@ const getCollegeDetails = async function (req, res) {
     try {
         let data=req.query
         if (!Object.keys(data).length) return res.status(400).send({ status: false, msg: "Please Enter The College Name", });
-        let clgName=data.collegeName.toLowerCase()
+        let clgName=data.collegeName.toLowerCase().trim()
 
         let  getClg = await collegeModel.findOne({name:clgName})
         if (!getClg) return res.status(404).send({ status: false, msg: "No such college Name found", });

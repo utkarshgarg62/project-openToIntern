@@ -7,36 +7,36 @@ const createInterns=async function(req,res){
         let{name,email,mobile,collegeName}=req.body
 
         if(Object.keys(req.body).length<1) {
-            return res.status(400).send({msg:"Insert data :Bad request"})
+            return res.status(400).send({ message:"Insert data :Bad request"})
         }
 
         if (!isValid(name)) {
-            return res.status(400).send({ msg: "Enter College Name" })
+            return res.status(400).send({ message: "Enter College Name" })
         }
         if (!isValidName(name)) {
-            return res.status(400).send({ msg: "Enter a valid Name" })
+            return res.status(400).send({ message: "Enter a valid Name" })
         }
         if (!isValid(email)) {
-            return res.status(400).send({ msg: "Enter a Email" })
+            return res.status(400).send({ message: "Enter a Email" })
         }
         if (!isValidEmail(email)) {
-            return res.status(400).send({ msg: "Enter a valid email" })
+            return res.status(400).send({ message: "Enter a valid email" })
         }
-        let checkEmail=await internModel .findOne({email:email})
-        if(checkEmail) return res.status(400).send({msg :"Email Already Registered"})
+        let checkEmail=await internModel .findOne({ $and: [ { email:email }, {isDeleted:false } ]})
+        if(checkEmail) return res.status(400).send({message :"Email Already Registered"})
 
         if (!isValid(mobile)) {
-            return res.status(400).send({ msg: "Enter Mobile Number" })
+            return res.status(400).send({ message: "Enter Mobile Number" })
         }
         if (!isValidMobile(mobile)) {
-            return res.status(400).send({ msg: "Enter Valid Mobile Number" })
+            return res.status(400).send({ message:` ${mobile} is not a vaild Mobile Number` })
         }
-        let checkMobile=await internModel .findOne({mobile:mobile})
-        if(checkMobile) return res.status(400).send({msg :"Mobile Already Registered"})
+        let checkMobile=await internModel .findOne({ $and: [ { mobile:mobile }, {isDeleted:false } ]})
+        if(checkMobile) return res.status(400).send({message :"Mobile Already Registered"})
 
         
         if (!isValid(collegeName)) {
-            return res.status(400).send({ status: false, msg: "Please Enter College Name" })
+            return res.status(400).send({ status: false, message: "Please Enter College Name" })
         }
 
         let clgName=collegeName.toLowerCase().trim()        
@@ -49,7 +49,7 @@ const createInterns=async function(req,res){
         res.status(201).send({ status: true, data: internData })
     }
     catch (err) {
-        res.status(500).send({ status: false, msg: err.message })
+        res.status(500).send({ status: false, message: err.message })
     }
 }
 

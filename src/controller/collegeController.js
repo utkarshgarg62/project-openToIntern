@@ -6,32 +6,32 @@ const createCollege=async function(req,res){
     try{
         let{name,fullName,logoLink}=req.body
         
-        if(Object.keys(req.body).length<1) {return res.status(400).send({msg:"Insert data :Bad request"})}
+        if(Object.keys(req.body).length<1) {return res.status(400).send({message:"Insert data :Bad request"})}
 
         if (!isValid(name)) {
-            return res.status(400).send({ msg: "Enter College Name" })
+            return res.status(400).send({ message: "Enter College Name" })
         }
         if (!isValidClgName(name)) {
-            return res.status(400).send({ msg: "Enter a valid College Name" })
+            return res.status(400).send({ message: "Enter a valid College Name" })
         }
 
         let Name = req.body.name.toLowerCase().trim()
-        let checkClg = await collegeModel.findOne({ name: Name });
-        if (checkClg) return res.status(400).send({ status: false, msg: "College Name Already Exists" });
+        let checkClg = await collegeModel.findOne({ $and: [ { name:name }, {isDeleted:false } ] });
+        if (checkClg) return res.status(400).send({ status: false, message: "College Name Already Exists" });
         req.body.name=Name
 
         if (!isValid(fullName)) {
-            return res.status(400).send({ msg: "Enter College Full Name" })
+            return res.status(400).send({ message: "Enter College Full Name" })
         }
         if (!isValidCollegeName(fullName)) {
-            return res.status(400).send({ msg: "Enter a valid College Full Name" })
+            return res.status(400).send({ message: "Enter a valid College Full Name" })
         }
 
         if (!isValid(logoLink)) {
-            return res.status(400).send({ msg: "Enter College Logo-Link" })
+            return res.status(400).send({ message: "Enter College Logo-Link" })
         }
         if (!isValidLink(logoLink)) {
-            return res.status(400).send({ msg: "Enter a valid url" })
+            return res.status(400).send({ message: "Enter a valid url" })
         }
 
         let collegeData=await collegeModel.create(req.body)
@@ -52,13 +52,13 @@ const getCollegeDetails = async function (req, res) {
         if (!Object.keys(data).length) return res.status(400).send({ status: false, msg: "Please Enter The College Name", });
         let clgName=data.collegeName.toLowerCase().trim()
 
-        let  getClg = await collegeModel.findOne({name:clgName})
+        let  getClg = await collegeModel.findOne({name:clgName,isDeleted:false})
         if (!getClg) return res.status(404).send({ status: false, msg: "No such college Name found", });
         
         let clgId=getClg._id 
        // console.log(clgId)
 
-        let  getData = await internModel.find({collegeId:clgId}).select({_id:1,name:1,email:1,mobile:1,collegeId:0}).populate('collegeId')
+        let  getData = await internModel.find({collegeId:clgId,isDeleted:false}).select({_id:1,name:1,email:1,mobile:1,collegeId:0}).populate('collegeId')
         if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
 
         let Name=getClg.name

@@ -13,7 +13,7 @@ const createInterns = async function (req, res) {
             return res.status(400).send({ message: "Insert data :Bad request" })
         }
         if (!isValid(name)) {
-            return res.status(400).send({ message: "Enter College Name" })
+            return res.status(400).send({ message: "Enter Intern Name" })
         }
         if (!isValidName(name)) {
             return res.status(400).send({ message: "Enter a valid Name" })
@@ -25,7 +25,7 @@ const createInterns = async function (req, res) {
         if (!isValidEmail(email)) {
             return res.status(400).send({ message: "Enter a valid email" })
         }
-        let checkEmail = await internModel.findOne({ email: email, isDeleted: false })
+        let checkEmail = await internModel.findOne({ email: email,isDeleted:false})
         if (checkEmail) return res.status(400).send({ message: "Email Already Registered" })
 
         if (!isValid(mobile)) {
@@ -34,7 +34,7 @@ const createInterns = async function (req, res) {
         if (!isValidMobile(mobile)) {
             return res.status(400).send({ message: ` ${mobile} is not a vaild Mobile Number` })
         }
-        let checkMobile = await internModel.findOne({ mobile: mobile, isDeleted: false })
+        let checkMobile = await internModel.findOne({ mobile: mobile, isDeleted:false})
         if (checkMobile) return res.status(400).send({ message: "Mobile Already Registered" })
 
 

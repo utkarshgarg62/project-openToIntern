@@ -18,7 +18,7 @@ const createInterns = async function (req, res) {
         if (!isValidName(name)) {
             return res.status(400).send({ message: "Enter a valid Name" })
         }
-        let Name = name.toLowerCase().trim() //To Convert College Name into lowerCase & trim spaces
+        let Name = name.trim() 
         req.body.name=Name
 
 

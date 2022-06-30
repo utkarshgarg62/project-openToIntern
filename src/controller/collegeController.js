@@ -31,7 +31,7 @@ const createCollege = async function (req, res) {
         if (!isValidCollegeName(fullName)) {
             return res.status(400).send({ message: "Enter a valid College Full Name" })
         }
-        let FullName = fullName.toLowerCase().trim() //To Convert College Full Name into lowerCase & trim spaces
+        let FullName = fullName.trim()
         req.body.fullName=FullName
 
 
@@ -41,7 +41,7 @@ const createCollege = async function (req, res) {
         if (!isValidLink(logoLink)) {
             return res.status(400).send({ message: "Enter a valid url" })
         }
-        let LogoLink = logoLink.toLowerCase().trim() //To Convert College Full Name into lowerCase & trim spaces
+        let LogoLink = logoLink.trim() 
         req.body.logoLink=LogoLink
 
 

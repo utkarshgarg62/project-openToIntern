@@ -2,9 +2,9 @@ const express= require('express')
 const bodyparser=require('body-parser')
 const route=require('./route/route')
 const mongoose=require('mongoose')
-
-
 const app=express()
+
+
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 

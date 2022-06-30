@@ -61,15 +61,15 @@ module.exports.createCollege = createCollege
 const getCollegeDetails = async function (req, res) {
     try {
         let data = req.query
-        if (!Object.keys(data).length) return res.status(400).send({ status: false, msg: "Please Enter The College Name", });
+        if (Object.keys(data).length<1) return res.status(400).send({ status: false, msg: "Please Enter The College Name", });
         let clgName = data.collegeName.toLowerCase().trim()
 
         let getClg = await collegeModel.findOne({ name: clgName, isDeleted: false })
-        if (!getClg) return res.status(404).send({ status: false, msg: "No such college Name found", });
+        if (!getClg) return res.status(404).send({ status: false, msg: "No such college found", });
 
         let clgId = getClg._id
 
-        let getData = await internModel.find({ collegeId: clgId, isDeleted: false }).select({ _id: 1, name: 1, email: 1, mobile: 1, collegeId: 0 }).populate('collegeId')
+        let getData = await internModel.find({ collegeId: clgId, isDeleted: false }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
         if (!getData.length) return res.status(404).send({ status: false, msg: "No intern Apply for This College", });
 
         let Name = getClg.name

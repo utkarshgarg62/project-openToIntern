@@ -40,7 +40,7 @@ const  isValidObjectId =function(id){
 
 //Mobile Validation
 const isValidMobile=function(mobile) {
-    var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+    var re = /^((\+91)?|91)?[789][0-9]{9}/;
     return re.test(mobile);
 }
 

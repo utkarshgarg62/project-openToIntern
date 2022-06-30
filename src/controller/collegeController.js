@@ -31,6 +31,9 @@ const createCollege = async function (req, res) {
         if (!isValidCollegeName(fullName)) {
             return res.status(400).send({ message: "Enter a valid College Full Name" })
         }
+        let FullName = fullName.toLowerCase().trim() //To Convert College Full Name into lowerCase & trim spaces
+        req.body.fullName=FullName
+
 
         if (!isValid(logoLink)) {
             return res.status(400).send({ message: "Enter College Logo-Link" })
@@ -38,6 +41,9 @@ const createCollege = async function (req, res) {
         if (!isValidLink(logoLink)) {
             return res.status(400).send({ message: "Enter a valid url" })
         }
+        let LogoLink = logoLink.toLowerCase().trim() //To Convert College Full Name into lowerCase & trim spaces
+        req.body.logoLink=LogoLink
+
 
         let collegeData = await collegeModel.create(req.body)
         res.status(201).send({ status: true, data: collegeData })

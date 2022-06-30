@@ -18,6 +18,10 @@ const createInterns = async function (req, res) {
         if (!isValidName(name)) {
             return res.status(400).send({ message: "Enter a valid Name" })
         }
+        let Name = name.toLowerCase().trim() //To Convert College Name into lowerCase & trim spaces
+        req.body.name=Name
+
+
         if (!isValid(email)) {
             return res.status(400).send({ message: "Enter a Email" })
         }
@@ -41,7 +45,7 @@ const createInterns = async function (req, res) {
             return res.status(400).send({ status: false, message: "Please Enter College Name" })
         }
 
-        let clgName = collegeName.toLowerCase().trim() //To Convert Name into lowerCase & trim spaces
+        let clgName = collegeName.toLowerCase().trim() //To Convert College Name into lowerCase & trim spaces
         let checkClgName = await collegeModel.findOne({ name: clgName, isDeleted: false })
         if (!checkClgName) return res.status(404).send({ status: false, message: ` No such college Name Not Found!` });
         let clgId = checkClgName._id

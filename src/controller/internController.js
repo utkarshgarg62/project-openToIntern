@@ -18,9 +18,6 @@ const createInterns = async function (req, res) {
         if (!isValidName(name)) {
             return res.status(400).send({ message: "Enter a valid Name" })
         }
-        let Name = name.trim() 
-        req.body.name=Name
-
 
         if (!isValid(email)) {
             return res.status(400).send({ message: "Enter a Email" })

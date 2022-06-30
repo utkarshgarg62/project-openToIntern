@@ -18,12 +18,10 @@ const createCollege = async function (req, res) {
             return res.status(400).send({ message: "Enter a valid College Name" })
         }
 
-        name = name.replace(/^\s+|\s+$/gm,'').toLowerCase() //To Convert Name into lowerCase & trim spaces
-        let checkClg = await collegeModel.findOne({ name: name, isDeleted: false });
+        let Name = req.body.name.toLowerCase().trim() //To Convert Name into lowerCase & trim spaces
+        let checkClg = await collegeModel.findOne({ name: Name, isDeleted: false });
         if (checkClg) return res.status(400).send({ status: false, message: "College Name Already Exists" });
-       
-
-
+        req.body.name=Name
 
         if (!isValid(fullName)) {
             return res.status(400).send({ message: "Enter College Full Name" })

@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 //clg Name Validation
 const isValidClgName = function (name) {
-    const nameRegex = /^[a-zA-Z ]+$/
+    const nameRegex = /^[a-zA-Z]{2,30}$/
     return nameRegex.test(name)
 }
 

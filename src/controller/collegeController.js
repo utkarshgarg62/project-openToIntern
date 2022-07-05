@@ -12,7 +12,7 @@ const createCollege = async function (req, res) {
 
         if (Object.keys(req.body).length < 1) { return res.status(400).send({ message: "Insert data :Bad request" }) }
 
-        let Name = req.body.name.toLowerCase().trim()
+        let Name = name.toLowerCase().trim()
         req.body.name=Name
 
         let FullName = fullName.trim()

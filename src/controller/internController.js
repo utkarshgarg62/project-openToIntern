@@ -6,6 +6,7 @@ const collegeModel = require("../models/collegeModel")
 //================================================Create Intern Api===================================================================
 
 const createInterns = async function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin','*')
     try {
         let { name, email, mobile, collegeName } = req.body
 

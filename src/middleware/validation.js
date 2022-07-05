@@ -51,5 +51,4 @@ const isValid = function (value) {
 
 
 
-
 module.exports = { isValidName, isValidEmail, isValidObjectId, isValidMobile, isValid, isValidLink, isValidCollegeName, isValidClgName }
